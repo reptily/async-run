@@ -8,7 +8,11 @@ class Fork
 
     public function spawn(\Closure $closure, bool $die = false, ...$params): int
     {
-        $pid = (int)pcntl_fork();
+        if (!function_exists('pcntl_fork')) {
+            throw new \Exception('PCNTL functions not available on this PHP installation');
+        }
+
+        $pid = (int) \pcntl_fork();
         if (0 == $pid) {
             $closure->__invoke(...$params);
             if ($die) {

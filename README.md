@@ -3,11 +3,11 @@
 composer require reptily/async-run
 ```
 
-# Example use
+### Example use as object
 
-Example file: <a href="https://github.com/reptily/async-run/blob/master/example/index.php">/example/index.php</a>
+Example file: <a href="https://github.com/reptily/async-run/blob/master/example/async_run.php">/example/async_run.php</a>
 
-This library provides several methods for working with oscichronity.
+This library provides several methods for working with asynchronicity.
 
 When an object is initialized in the constructor, parameters are available.
 
@@ -19,9 +19,39 @@ new AsyncRun(
 );
 ```
 
-## Methods
+### Example use as callbacks
 
-*init* - Object inacylization method, used for prelaunch configuration.
+Example file: <a href="https://github.com/reptily/async-run/blob/master/example/async.php">/example/async.php</a>
+
+You can easily use the library within your code.
+
+To do this, fill in the necessary functions in the **run(...function)** method
+
+After this, all the functions specified in run() will be executed,
+if there is success, **then()** will be called,
+if there is an error, **catch()** will be called,
+the **finally()** method will be called in any of the above cases.
+
+```php
+Async::run(
+    function () {
+        sleep(1);
+        echo "AAA" . PHP_EOL;
+    },
+    function () {
+        echo "BBB" . PHP_EOL;
+    }
+)->then(function () {
+    echo "CCC" . PHP_EOL;
+})->finally(function () {
+    echo "DDD" . PHP_EOL;
+})->catch(function ($errorText) {
+    echo "Error " . $errorText . PHP_EOL;
+});
+```
+### Methods
+
+*init* - Object initialization method, used for prelaunch configuration.
 
 ```php
 protected function init(): void
